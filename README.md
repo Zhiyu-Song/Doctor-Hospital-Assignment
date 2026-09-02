@@ -8,7 +8,7 @@ doctor preference rankings while respecting hospital capacity constraints.
 ## Team
 
 - [Name1]
-- [Name2]
+- Xinhao Jin
 - Zhiyu Song
 
 ## Proposed Method
