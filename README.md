@@ -9,7 +9,7 @@ doctor preference rankings while respecting hospital capacity constraints.
 
 - [Name1]
 - [Name2]
-- [Zhiyu Song]
+- Zhiyu Song
 
 ## Proposed Method
 
