@@ -34,29 +34,6 @@ This provides a simple and interpretable baseline for comparison with the optimi
 
 Minimize the total preference cost across all doctors:
 
-[
-\min \sum_{i=1}^{N}\sum_{j=1}^{K} c_{ij}x_{ij}
-]
-
-where:
-
-(c_{ij}) is the preference cost/rank of hospital (j) for doctor (i).
-(x_{ij}=1) if doctor (i) is assigned to hospital (j), and (0) otherwise.
-
-Subject to:
-
-[
-\sum_{j=1}^{K}x_{ij}=1
-\quad \forall i
-]
-
-[
-\sum_{i=1}^{N}x_{ij}\leq C_j
-\quad \forall j
-]
-
-where (C_j) is the capacity of hospital (j).
-
 ## Evaluation
 
 Compare the proposed optimization method against the greedy baseline using:
