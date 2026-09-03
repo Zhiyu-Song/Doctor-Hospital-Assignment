@@ -10,7 +10,7 @@ $$
 
 Each doctor must be assigned to exactly one hospital, and each hospital cannot exceed its capacity. All doctors are eligible for all hospitals, and preferences are deterministic.
 
-Let \(x_{ij}\in\{0,1\}\) indicate whether doctor \(i\) is assigned to hospital \(j\), and let \(r_{ij}\) be doctor \(i\)'s preference rank for hospital \(j\). We aim to minimize total preference cost:
+Let $$\(x_{ij}\in\{0,1\}\)$$ indicate whether doctor $$\(i\)$$ is assigned to hospital $$\(j\)$$, and let $$\(r_{ij}\)$$ be doctor $$\(i\)$$'s preference rank for hospital $$\(j\)$$. We aim to minimize total preference cost:
 
 $$
 \min \sum_{i=1}^{N}\sum_{j=1}^{K} r_{ij}x_{ij}
@@ -32,7 +32,7 @@ $$
 
 We will use the **Kuhn–Munkres (KM) algorithm** and adapt it to handle hospital capacity constraints.
 
-Since standard KM solves a one-to-one assignment problem, each hospital \(j\) will be expanded into \(C_j\) equivalent assignment slots. For example, a hospital with capacity 3 is represented by three slots with identical assignment costs. The resulting problem can then be formulated as a one-to-one matching problem and solved using KM. If necessary, dummy doctors or hospital slots will be added to obtain a square cost matrix.
+Since standard KM solves a one-to-one assignment problem, each hospital $$\(j\)$$ will be expanded into $$\(C_j\)$$ equivalent assignment slots. For example, a hospital with capacity 3 is represented by three slots with identical assignment costs. The resulting problem can then be formulated as a one-to-one matching problem and solved using KM. If necessary, dummy doctors or hospital slots will be added to obtain a square cost matrix.
 
 ### Baseline: Greedy Assignment
 
