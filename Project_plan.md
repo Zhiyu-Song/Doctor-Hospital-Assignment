@@ -10,7 +10,7 @@ $$
 
 Each doctor must be assigned to exactly one hospital, and each hospital cannot exceed its capacity. All doctors are eligible for all hospitals, and preferences are deterministic.
 
-Let $$x_{ij} \in \left\{0,1\right\}$$ indicate whether doctor $$i$$ is assigned to hospital $$j$$, and let $$r_{ij}$$ be doctor $$i$$'s preference rank for hospital $$j$$. We aim to minimize total preference cost:
+Let $$x_{ij} \in \{0,1\}$$ indicate whether doctor $$i$$ is assigned to hospital $$j$$, and let $$r_{ij}$$ be doctor $$i$$'s preference rank for hospital $$j$$. We aim to minimize total preference cost:
 
 $$
 \min \sum_{i=1}^{N}\sum_{j=1}^{K} r_{ij}x_{ij}
