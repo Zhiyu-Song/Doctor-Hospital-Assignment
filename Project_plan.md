@@ -2,7 +2,7 @@
 
 ## 1. Problem and Assumptions
 
-We consider the problem of assigning \(N\) doctors to \(K\) hospitals. Each doctor provides a complete ranked preference list over hospitals, while each hospital has a maximum capacity $$\(C_j\)$$. We assume
+We consider the problem of assigning \N\ doctors to \(K\) hospitals. Each doctor provides a complete ranked preference list over hospitals, while each hospital has a maximum capacity $$\(C_j\)$$. We assume
 
 $$
 \sum_{j=1}^{K} C_j \geq N.
