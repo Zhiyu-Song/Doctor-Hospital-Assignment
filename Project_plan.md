@@ -10,10 +10,10 @@ $$
 
 Each doctor must be assigned to exactly one hospital, and each hospital cannot exceed its capacity. All doctors are eligible for all hospitals, and preferences are deterministic.
 
-Let $$x_{ij} \in \lbrace 0,1 \rbrace $$ indicate whether doctor $$i$$ is assigned to hospital $$j$$, and let $$r_{ij}$$ be doctor $$i$$'s preference rank for hospital $$j$$. We aim to minimize total preference cost:
+Let $$x_{ij} \in \lbrace 0,1 \rbrace $$ indicate whether doctor $$i$$ is assigned to hospital $$j$$, and let $$s_{ij}$$ be doctor $$i$$'s preference score for hospital $$j$$.. We aim to maximize total preference sum:
 
 $$
-\min \sum_{i=1}^{N}\sum_{j=1}^{K} r_{ij}x_{ij}
+\max \sum_{i=1}^{N}\sum_{j=1}^{K} s_{ij}x_{ij}
 $$
 
 subject to
@@ -42,16 +42,17 @@ As a baseline, doctors are processed sequentially and each doctor is assigned to
 
 We will compare KM with the greedy baseline using synthetic preference matrices under different hospital capacity distributions.
 
+Each doctor assigns a preference score to every hospital, where a higher score indicates a stronger preference. The score obtained by a doctor is the preference score of their assigned hospital.
+
 We will evaluate:
 
-* **Average preference rank** — primary metric; lower is better.
-* **First-choice assignment rate** — percentage receiving their top choice; higher is better.
-* **Top-2 assignment rate** — percentage receiving a top-two choice; higher is better.
-* **Worst assigned rank** — highest rank assigned to any doctor; lower is better.
+* **Total Preference Score** — primary metric; the sum of preference scores received by all doctors. Higher is better.
+* **First-choice assignment rate** — percentage of doctors assigned to their highest-scoring hospital. Higher is better.
+* **Top-2 assignment rate** — percentage of doctors assigned to one of their two highest-scoring hospitals. Higher is better.
+* **Worst assigned score** — minimum preference score received by any doctor. Higher is better.
 * **Runtime** — computational cost as problem size increases.
 
-We will test different numbers of doctors and hospitals, balanced and uneven hospital capacities, and different levels of competition for popular hospitals.
-
+We will test different numbers of doctors and hospitals, balanced and uneven hospital capacities, and different levels of competition for highly preferred hospitals.
 ## 4. Limitations and Extensions
 
 The current model does not consider hospital preferences, doctor specialties, geographic constraints, fairness, or incomplete/uncertain preferences. Future extensions could incorporate eligibility constraints, hospital priorities, fairness objectives, or weighted preference functions.
