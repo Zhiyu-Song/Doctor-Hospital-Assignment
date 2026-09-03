@@ -47,9 +47,6 @@ Each doctor assigns a preference score to every hospital, where a higher score i
 We will evaluate:
 
 * **Total Preference Score** — primary metric; the sum of preference scores received by all doctors. Higher is better.
-* **First-choice assignment rate** — percentage of doctors assigned to their highest-scoring hospital. Higher is better.
-* **Top-2 assignment rate** — percentage of doctors assigned to one of their two highest-scoring hospitals. Higher is better.
-* **Worst assigned score** — minimum preference score received by any doctor. Higher is better.
 * **Runtime** — computational cost as problem size increases.
 
 We will test different numbers of doctors and hospitals, balanced and uneven hospital capacities, and different levels of competition for highly preferred hospitals.
