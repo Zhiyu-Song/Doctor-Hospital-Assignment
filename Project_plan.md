@@ -2,127 +2,62 @@
 
 ## 1. Problem and Assumptions
 
-We consider the problem of assigning (N) doctors to (K) hospitals. Each doctor provides a complete ranked preference list over all hospitals, while hospitals do not express preferences over doctors.
+We consider the problem of assigning \(N\) doctors to \(K\) hospitals. Each doctor provides a complete ranked preference list over hospitals, while each hospital has a maximum capacity \(C_j\). We assume
 
-Each hospital (j) has a maximum capacity (C_j), and the total hospital capacity is assumed to be sufficient to assign all doctors:
-
-[
+$$
 \sum_{j=1}^{K} C_j \geq N.
-]
+$$
 
-We assume that:
+Each doctor must be assigned to exactly one hospital, and each hospital cannot exceed its capacity. All doctors are eligible for all hospitals, and preferences are deterministic.
 
-Each doctor must be assigned to exactly one hospital.
-Each hospital can accept at most (C_j) doctors.
-Every doctor is eligible for every hospital.
-Doctor preferences are complete and deterministic.
-Hospitals do not have preferences or priorities over doctors.
-There are no additional constraints such as geographic location, specialty, or fairness requirements.
+Let \(x_{ij}\in\{0,1\}\) indicate whether doctor \(i\) is assigned to hospital \(j\), and let \(r_{ij}\) be doctor \(i\)'s preference rank for hospital \(j\). We aim to minimize total preference cost:
 
-We formulate the problem using binary decision variables (x_{ij}), where (x_{ij}=1) if doctor (i) is assigned to hospital (j), and (0) otherwise. Let (r_{ij}) denote the preference rank of hospital (j) for doctor (i), where a smaller rank indicates a stronger preference.
+$$
+\min \sum_{i=1}^{N}\sum_{j=1}^{K} r_{ij}x_{ij}
+$$
+
+subject to
+
+$$
+\sum_{j=1}^{K}x_{ij}=1,\quad \forall i,
+$$
+
+$$
+\sum_{i=1}^{N}x_{ij}\leq C_j,\quad \forall j.
+$$
 
 ## 2. Algorithm and Baseline
 
-Proposed Method: Kuhn–Munkres (KM) Algorithm
+### Proposed Method: Kuhn–Munkres (KM) Algorithm
 
-We plan to implement the Kuhn–Munkres (KM) algorithm for the doctor-hospital assignment problem.
+We will use the **Kuhn–Munkres (KM) algorithm** and adapt it to handle hospital capacity constraints.
 
-The standard KM algorithm solves a one-to-one assignment problem. Since each hospital in our problem can accept multiple doctors, we will modify the assignment formulation to incorporate hospital capacity constraints.
+Since standard KM solves a one-to-one assignment problem, each hospital \(j\) will be expanded into \(C_j\) equivalent assignment slots. For example, a hospital with capacity 3 is represented by three slots with identical assignment costs. The resulting problem can then be formulated as a one-to-one matching problem and solved using KM. If necessary, dummy doctors or hospital slots will be added to obtain a square cost matrix.
 
-A hospital with capacity (C_j) can be represented by (C_j) assignment positions. Each position corresponds to the same hospital and has the same preference cost for each doctor. This allows the capacitated doctor-hospital assignment problem to be represented as a matching problem that can be solved using the KM algorithm.
+### Baseline: Greedy Assignment
 
-For example, if hospital (j) has capacity (C_j=3), we create three equivalent positions:
-
-[
-H_{j,1}, H_{j,2}, H_{j,3}.
-]
-
-For doctor (i), the assignment cost to each of these positions is:
-
-[
-c_{i,j,k}=r_{ij}.
-]
-
-We will then apply the KM algorithm to the resulting cost matrix and map the assigned positions back to their corresponding hospitals.
-
-Baseline: Greedy Assignment
-
-We will implement a simple greedy algorithm as the baseline.
-
-Doctors are processed sequentially. For each doctor, the algorithm assigns them to their highest-ranked hospital that still has available capacity.
-
-The greedy baseline does not reconsider previous assignments, allowing us to compare its performance with the globally optimized assignment produced by KM.
+As a baseline, doctors are processed sequentially and each doctor is assigned to their highest-ranked hospital that still has available capacity. The greedy algorithm does not reconsider previous assignments.
 
 ## 3. Evaluation
 
-We will compare the improved KM algorithm with the greedy baseline using synthetic preference matrices under different hospital capacity distributions.
+We will compare KM with the greedy baseline using synthetic preference matrices under different hospital capacity distributions.
 
-Primary Metric
+We will evaluate:
 
-Average Preference Rank
+* **Average preference rank** — primary metric; lower is better.
+* **First-choice assignment rate** — percentage receiving their top choice; higher is better.
+* **Top-2 assignment rate** — percentage receiving a top-two choice; higher is better.
+* **Worst assigned rank** — highest rank assigned to any doctor; lower is better.
+* **Runtime** — computational cost as problem size increases.
 
-\frac{1}{N}
-\sum_{i=1}^{N}r_{i,a_i}
-]
-
-where (a_i) is the hospital assigned to doctor (i).
-
-A lower average preference rank indicates greater overall doctor satisfaction.
-
-Secondary Metrics
-
-1. First-Choice Assignment Rate
-
-The percentage of doctors assigned to their first-choice hospital.
-
-[
-\frac{#{\text{doctors assigned to first choice}}}{N}
-]
-
-Higher is better.
-
-2. Top-2 Assignment Rate
-
-The percentage of doctors assigned to one of their top-two choices.
-
-Higher is better.
-
-3. Worst Assigned Preference Rank
-
-The highest preference rank received by any doctor.
-
-Lower is better.
-
-4. Total Preference Cost
-
-[
-\sum_{i=1}^{N}r_{i,a_i}
-]
-
-This directly corresponds to the optimization objective.
-
-5. Runtime
-
-We will measure the computational runtime of both algorithms as the number of doctors and hospitals increases.
-
-This will allow us to evaluate not only assignment quality but also computational scalability.
-
-Experimental Settings
-
-We will generate synthetic preference matrices under different scenarios, including:
-
-Different numbers of doctors and hospitals.
-Balanced versus uneven hospital capacities.
-Different levels of competition for popular hospitals.
-Different ratios between total hospital capacity and the number of doctors.
-
-For each setting, we will compare the greedy baseline and improved KM algorithm using the evaluation metrics above.
+We will test different numbers of doctors and hospitals, balanced and uneven hospital capacities, and different levels of competition for popular hospitals.
 
 ## 4. Limitations and Extensions
 
-The current model assumes that hospitals have no preferences over doctors and that every doctor is eligible for every hospital.
-Future extensions could incorporate hospital preferences, eligibility constraints, fairness objectives, weighted preference functions, or multi-objective optimization.
+The current model does not consider hospital preferences, doctor specialties, geographic constraints, fairness, or incomplete/uncertain preferences. Future extensions could incorporate eligibility constraints, hospital priorities, fairness objectives, or weighted preference functions.
 
-##5. Status
+## 5. Status
 
-Project planning stage.
+**Project planning stage.**
+
+Next steps are to finalize the KM-based formulation, implement the greedy baseline and capacity-aware KM algorithm, generate test cases, and compare the two methods using the evaluation metrics above.
