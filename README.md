@@ -2,33 +2,81 @@
 
 ## Project Goal
 
-Develop software to assign N doctors to K hospitals based on
-doctor preference rankings while respecting hospital capacity constraints.
+Develop software to assign N doctors to K hospitals based on doctor preference rankings while respecting hospital capacity constraints.
+
+The goal is to find an assignment that maximizes overall doctor satisfaction while ensuring that:
+
+Each doctor is assigned to exactly one hospital.
+Each hospital does not exceed its capacity.
+The assignment is feasible under all specified constraints.
 
 ## Team
 
-- [Name1]
+- Yuchen Ai
 - Xinhao Jin
 - Zhiyu Song
 
 ## Proposed Method
 
-Minimum-cost flow / transportation optimization.
+Hungarian Algorithm (Kuhn–Munkres Algorithm) with modifications to handle hospital capacity constraints.
+
+Because the standard Hungarian algorithm is designed for a one-to-one assignment problem, we will adapt the problem by representing hospital capacity appropriately, such as by creating multiple hospital slots corresponding to available positions.
 
 ## Baseline
 
-Greedy preference-based assignment.
+Greedy assignment based on doctor preferences.
+
+Doctors are processed sequentially. For each doctor, assign them to their highest-ranked hospital that still has available capacity.
+
+This provides a simple and interpretable baseline for comparison with the optimization-based method.
 
 ## Objective
 
-Minimize total preference rank.
+Minimize the total preference cost across all doctors:
+
+[
+\min \sum_{i=1}^{N}\sum_{j=1}^{K} c_{ij}x_{ij}
+]
+
+where:
+
+(c_{ij}) is the preference cost/rank of hospital (j) for doctor (i).
+(x_{ij}=1) if doctor (i) is assigned to hospital (j), and (0) otherwise.
+
+Subject to:
+
+[
+\sum_{j=1}^{K}x_{ij}=1
+\quad \forall i
+]
+
+[
+\sum_{i=1}^{N}x_{ij}\leq C_j
+\quad \forall j
+]
+
+where (C_j) is the capacity of hospital (j).
 
 ## Evaluation
 
-- Average preference rank
-- First-choice percentage
-- Top-2 percentage
-- Worst assigned rank
+Compare the proposed optimization method against the greedy baseline using:
+
+### Total preference cost
+Lower is better.
+### Average preference rank
+Average rank of the hospital assigned to each doctor.
+Lower is better.
+### First-choice assignment rate
+Percentage of doctors assigned to their first-choice hospital.
+Higher is better.
+### Top-2 / Top-3 assignment rate
+Percentage of doctors assigned to one of their top 2 or top 3 choices.
+Higher is better.
+### Worst assigned rank
+Highest preference rank received by any doctor.
+Lower is better.
+### Runtime
+Compare computational efficiency as the number of doctors and hospitals increases.
 
 ## Status
 
